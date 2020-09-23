@@ -51,7 +51,7 @@ public class PatientEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_patient")
-    private Integer idPatient;
+    private Long idPatient;
     @Basic(optional = false)
     @Column(name = "first_name")
     private String firstName;
@@ -83,11 +83,11 @@ public class PatientEntity implements Serializable {
     public PatientEntity() {
     }
 
-    public PatientEntity(Integer idPatient) {
+    public PatientEntity(Long idPatient) {
         this.idPatient = idPatient;
     }
 
-    public PatientEntity(Integer idPatient, String firstName, String lastName, String address1, String phone1) {
+    public PatientEntity(Long idPatient, String firstName, String lastName, String address1, String phone1) {
         this.idPatient = idPatient;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -95,11 +95,11 @@ public class PatientEntity implements Serializable {
         this.phone1 = phone1;
     }
 
-    public Integer getIdPatient() {
+    public Long getIdPatient() {
         return idPatient;
     }
 
-    public void setIdPatient(Integer idPatient) {
+    public void setIdPatient(Long idPatient) {
         this.idPatient = idPatient;
     }
 
