@@ -11,7 +11,7 @@
     <groupId>gt.edu.umg</groupId>
     <artifactId>as2p2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>as2p2</name>
     <description>Examen Parcial II - AS2</description>
 

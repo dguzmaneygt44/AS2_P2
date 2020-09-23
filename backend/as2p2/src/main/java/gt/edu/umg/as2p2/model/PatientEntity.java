@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "tb_patient")
-@XmlRootElement
-@NamedQueries({
+//@XmlRootElement
+/*@NamedQueries({
     @NamedQuery(name = "PatientEntity.findAll", query = "SELECT p FROM PatientEntity p"),
     @NamedQuery(name = "PatientEntity.findByIdPatient", query = "SELECT p FROM PatientEntity p WHERE p.idPatient = :idPatient"),
     @NamedQuery(name = "PatientEntity.findByFirstName", query = "SELECT p FROM PatientEntity p WHERE p.firstName = :firstName"),
@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PatientEntity.findByPhone1", query = "SELECT p FROM PatientEntity p WHERE p.phone1 = :phone1"),
     @NamedQuery(name = "PatientEntity.findByPhone2", query = "SELECT p FROM PatientEntity p WHERE p.phone2 = :phone2"),
     @NamedQuery(name = "PatientEntity.findByGender", query = "SELECT p FROM PatientEntity p WHERE p.gender = :gender"),
-    @NamedQuery(name = "PatientEntity.findByBirthdate", query = "SELECT p FROM PatientEntity p WHERE p.birthdate = :birthdate")})
+    @NamedQuery(name = "PatientEntity.findByBirthdate", query = "SELECT p FROM PatientEntity p WHERE p.birthdate = :birthdate")})*/
 public class PatientEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,8 +77,8 @@ public class PatientEntity implements Serializable {
     @Column(name = "birthdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthdate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPatient")
-    private Collection<ConsultationEntity> consultationEntityCollection;
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "idPatient")
+    private Collection<ConsultationEntity> consultationEntityCollection;*/
 
     public PatientEntity() {
     }
@@ -183,14 +183,14 @@ public class PatientEntity implements Serializable {
         this.birthdate = birthdate;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<ConsultationEntity> getConsultationEntityCollection() {
         return consultationEntityCollection;
     }
 
     public void setConsultationEntityCollection(Collection<ConsultationEntity> consultationEntityCollection) {
         this.consultationEntityCollection = consultationEntityCollection;
-    }
+    }*/
 
     @Override
     public int hashCode() {
