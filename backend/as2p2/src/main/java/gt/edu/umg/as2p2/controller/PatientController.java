@@ -6,7 +6,7 @@
 package gt.edu.umg.as2p2.controller;
 
 import gt.edu.umg.as2p2.model.PatientEntity;
-import gt.edu.umg.as2p2.repository.PatientRepository;
+import gt.edu.umg.as2p2.dao.PatientRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

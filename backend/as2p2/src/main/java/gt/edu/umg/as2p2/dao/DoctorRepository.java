@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gt.edu.umg.as2p2.repository;
+package gt.edu.umg.as2p2.dao;
 
-import gt.edu.umg.as2p2.model.ConsultationEntity;
+import gt.edu.umg.as2p2.model.DoctorEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +14,4 @@ import org.springframework.stereotype.Repository;
  * @author AK272DT
  */
 @Repository
-public interface ConsultationRepository extends JpaRepository<ConsultationEntity, Long> {}
+public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {}
