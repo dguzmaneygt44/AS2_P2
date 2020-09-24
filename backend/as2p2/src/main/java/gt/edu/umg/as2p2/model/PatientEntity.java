@@ -1,49 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gt.edu.umg.as2p2.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Modelo PatientEntity
  * @author AK272DT
  */
 @Entity
 @Table(name = "tb_patient")
-//@XmlRootElement
-/*@NamedQueries({
-    @NamedQuery(name = "PatientEntity.findAll", query = "SELECT p FROM PatientEntity p"),
-    @NamedQuery(name = "PatientEntity.findByIdPatient", query = "SELECT p FROM PatientEntity p WHERE p.idPatient = :idPatient"),
-    @NamedQuery(name = "PatientEntity.findByFirstName", query = "SELECT p FROM PatientEntity p WHERE p.firstName = :firstName"),
-    @NamedQuery(name = "PatientEntity.findByMiddleName", query = "SELECT p FROM PatientEntity p WHERE p.middleName = :middleName"),
-    @NamedQuery(name = "PatientEntity.findByLastName", query = "SELECT p FROM PatientEntity p WHERE p.lastName = :lastName"),
-    @NamedQuery(name = "PatientEntity.findByMaidenName", query = "SELECT p FROM PatientEntity p WHERE p.maidenName = :maidenName"),
-    @NamedQuery(name = "PatientEntity.findByAddress1", query = "SELECT p FROM PatientEntity p WHERE p.address1 = :address1"),
-    @NamedQuery(name = "PatientEntity.findByAddress2", query = "SELECT p FROM PatientEntity p WHERE p.address2 = :address2"),
-    @NamedQuery(name = "PatientEntity.findByPhone1", query = "SELECT p FROM PatientEntity p WHERE p.phone1 = :phone1"),
-    @NamedQuery(name = "PatientEntity.findByPhone2", query = "SELECT p FROM PatientEntity p WHERE p.phone2 = :phone2"),
-    @NamedQuery(name = "PatientEntity.findByGender", query = "SELECT p FROM PatientEntity p WHERE p.gender = :gender"),
-    @NamedQuery(name = "PatientEntity.findByBirthdate", query = "SELECT p FROM PatientEntity p WHERE p.birthdate = :birthdate")})*/
 public class PatientEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,8 +51,6 @@ public class PatientEntity implements Serializable {
     @Column(name = "birthdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthdate;
-    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "idPatient")
-    private Collection<ConsultationEntity> consultationEntityCollection;*/
 
     public PatientEntity() {
     }
@@ -183,15 +155,6 @@ public class PatientEntity implements Serializable {
         this.birthdate = birthdate;
     }
 
-    /*@XmlTransient
-    public Collection<ConsultationEntity> getConsultationEntityCollection() {
-        return consultationEntityCollection;
-    }
-
-    public void setConsultationEntityCollection(Collection<ConsultationEntity> consultationEntityCollection) {
-        this.consultationEntityCollection = consultationEntityCollection;
-    }*/
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -201,7 +164,7 @@ public class PatientEntity implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // Advertencia - Este método no funcionará en el caso de que los campos para el id no se establezcan.
         if (!(object instanceof PatientEntity)) {
             return false;
         }
