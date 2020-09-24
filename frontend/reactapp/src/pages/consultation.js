@@ -52,7 +52,7 @@ export default class App extends Component{
 }
 */
 
-export default class App extends Component{
+export default class consultation extends Component{
   constructor(){
     super();
     this.state = {
@@ -156,7 +156,7 @@ export default class App extends Component{
       <div style={{width:'80%', margin: '0 auto', marginTop: '20px'}}>
         <Menubar model={this.items}/>
         <br/>
-        <Panel header="React CRUD App">
+        <Panel header="React CRUD Consultas">
             <DataTable value={this.state.personas} paginator={true} rows="4" selectionMode="single" selection={this.state.selectedPersona} onSelectionChange={e => this.setState({selectedPersona: e.value})}>
               <Column field="idPatient" header="ID"></Column>
               <Column field="firstName" header="Nombre"></Column>

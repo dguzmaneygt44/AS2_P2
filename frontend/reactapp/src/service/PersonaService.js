@@ -6,4 +6,12 @@ export class PersonaService {
     getAll(){
         return axios.get(this.baseUrl + "patients").then(res => res.data);
     }
+
+    save(persona) {
+        return axios.post(this.baseUrl + "patients", persona).then(res => res.data);
+    }
+
+    delete(idPatient) {
+        return axios.delete(this.baseUrl + "patients/"+ idPatient ).then(res => res.data);
+    }
 }
