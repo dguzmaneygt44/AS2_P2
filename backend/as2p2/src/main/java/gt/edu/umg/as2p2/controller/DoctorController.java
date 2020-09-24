@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gt.edu.umg.as2p2.controller;
 
 import gt.edu.umg.as2p2.dao.DoctorRepository;
@@ -25,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
+ * Controlador DoctorController
+ * Permite implementar todas las operaciones del CRUD para la entidad DoctorEntity
  * @author AK272DT
  */
 @RestController
