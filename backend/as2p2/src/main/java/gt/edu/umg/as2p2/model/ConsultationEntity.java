@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "tb_consultation")
-@XmlRootElement
+/*@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ConsultationEntity.findAll", query = "SELECT c FROM ConsultationEntity c"),
     @NamedQuery(name = "ConsultationEntity.findByIdConsultation", query = "SELECT c FROM ConsultationEntity c WHERE c.idConsultation = :idConsultation"),
@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ConsultationEntity.findByObservations", query = "SELECT c FROM ConsultationEntity c WHERE c.observations = :observations"),
     @NamedQuery(name = "ConsultationEntity.findByComplaints", query = "SELECT c FROM ConsultationEntity c WHERE c.complaints = :complaints"),
     @NamedQuery(name = "ConsultationEntity.findByOtherDetails", query = "SELECT c FROM ConsultationEntity c WHERE c.otherDetails = :otherDetails"),
-    @NamedQuery(name = "ConsultationEntity.findByNextVisit", query = "SELECT c FROM ConsultationEntity c WHERE c.nextVisit = :nextVisit")})
+    @NamedQuery(name = "ConsultationEntity.findByNextVisit", query = "SELECT c FROM ConsultationEntity c WHERE c.nextVisit = :nextVisit")})*/
 public class ConsultationEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,7 +46,7 @@ public class ConsultationEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_consultation")
-    private Integer idConsultation;
+    private Long idConsultation;
     @Column(name = "consultation_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date consultationDate;
@@ -75,21 +75,21 @@ public class ConsultationEntity implements Serializable {
     public ConsultationEntity() {
     }
 
-    public ConsultationEntity(Integer idConsultation) {
+    public ConsultationEntity(Long idConsultation) {
         this.idConsultation = idConsultation;
     }
 
-    public ConsultationEntity(Integer idConsultation, String diagnosis, String treatment) {
+    public ConsultationEntity(Long idConsultation, String diagnosis, String treatment) {
         this.idConsultation = idConsultation;
         this.diagnosis = diagnosis;
         this.treatment = treatment;
     }
 
-    public Integer getIdConsultation() {
+    public Long getIdConsultation() {
         return idConsultation;
     }
 
-    public void setIdConsultation(Integer idConsultation) {
+    public void setIdConsultation(Long idConsultation) {
         this.idConsultation = idConsultation;
     }
 

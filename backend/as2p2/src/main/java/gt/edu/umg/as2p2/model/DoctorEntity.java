@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "tb_doctor")
-@XmlRootElement
+/*@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DoctorEntity.findAll", query = "SELECT d FROM DoctorEntity d"),
     @NamedQuery(name = "DoctorEntity.findByIdDoctor", query = "SELECT d FROM DoctorEntity d WHERE d.idDoctor = :idDoctor"),
@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DoctorEntity.findByCollegiateNumber", query = "SELECT d FROM DoctorEntity d WHERE d.collegiateNumber = :collegiateNumber"),
     @NamedQuery(name = "DoctorEntity.findByIsActive", query = "SELECT d FROM DoctorEntity d WHERE d.isActive = :isActive"),
     @NamedQuery(name = "DoctorEntity.findByPhone1", query = "SELECT d FROM DoctorEntity d WHERE d.phone1 = :phone1"),
-    @NamedQuery(name = "DoctorEntity.findByPhone2", query = "SELECT d FROM DoctorEntity d WHERE d.phone2 = :phone2")})
+    @NamedQuery(name = "DoctorEntity.findByPhone2", query = "SELECT d FROM DoctorEntity d WHERE d.phone2 = :phone2")})*/
 public class DoctorEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -82,8 +82,8 @@ public class DoctorEntity implements Serializable {
     private String phone1;
     @Column(name = "phone2")
     private String phone2;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoctor")
-    private Collection<ConsultationEntity> consultationEntityCollection;
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoctor")
+    private Collection<ConsultationEntity> consultationEntityCollection;*/
 
     public DoctorEntity() {
     }
@@ -203,14 +203,14 @@ public class DoctorEntity implements Serializable {
         this.phone2 = phone2;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<ConsultationEntity> getConsultationEntityCollection() {
         return consultationEntityCollection;
     }
 
     public void setConsultationEntityCollection(Collection<ConsultationEntity> consultationEntityCollection) {
         this.consultationEntityCollection = consultationEntityCollection;
-    }
+    }*/
 
     @Override
     public int hashCode() {
