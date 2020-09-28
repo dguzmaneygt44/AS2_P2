@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import { PersonaService } from './service/PersonaService';
+//import './App.css';
+import { DoctorService  } from '../service/DoctorService';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import {Panel} from 'primereact/panel';
@@ -18,57 +18,26 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-/*
-export default class App extends Component{
-  constructor(){
-    super();
-    this.state = {};
-    this.personaService = new PersonaService();
-  }
 
-  componentDidMount(){
-    this.personaService.getAll().then(data => this.setState({personas: data}))
-  }
-
-  render(){
-    return (
-      <Panel header="react" style={{width: '100%', marginTop:'20px'}}>
-        <DataTable value={this.state.personas}>
-          <Column field="idPatient" header="Id"></Column>
-          <Column field="firstName" header="Nombre"></Column> 
-          <Column field="middleName" header="Aeguno nombre"></Column>
-          <Column field="lastName" header="Apellido"></Column>
-          <Column field="maidenName" header="Segundo apellido"></Column>
-          <Column field="address1" header="Direccion1"></Column>
-          <Column field="address2" header="Direccion2"></Column>
-          <Column field="phone1" header="Telefono1"></Column>
-          <Column field="phone2" header="Telefono2"></Column>
-          <Column field="gender" header="Genero"></Column>
-          <Column field="birthdate" header="Fecha nacimiento"></Column>
-        </DataTable>
-      </Panel>
-    );
-  }
-}
-*/
-
-export default class App extends Component{
+export default class DoctorEntity extends Component{
   constructor(){
     super();
     this.state = {
       visible : false,
       persona: {
-        idPatient: null,
+        idDoctors: null,
         firstName: null,
         middleName: null,
         lastName: null,
         maidenName: null,
         address1: null,
         address2: null,
-        phone1: null,
-        phone2: null,
         gender: null,
-        birthdate: null
+        birthdate: null,
+        collegiateNumber: null,
+        isActive: null,
+        phone1: null,
+        phone2: null
       },
       selectedPersona : {
 
@@ -92,19 +61,12 @@ export default class App extends Component{
       }
     ];
    
-    this.cities = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'}
-  ];
-   
+    
 
    
   
 
-    this.personaService = new PersonaService();
+    this.personaService = new DoctorService();
     this.save = this.save.bind(this);
     this.delete = this.delete.bind(this);
     this.footer = (
@@ -123,17 +85,19 @@ export default class App extends Component{
       this.setState({
         visible : false,
         persona: {
-          idPatient: null,
+          idDoctor: null,
           firstName: null,
           middleName: null,
           lastName: null,
           maidenName: null,
           address1: null,
           address2: null,
-          phone1: null,
-          phone2: null,
           gender: null,
-          birthdate: null
+          birthdate: null,
+          collegiateNumber: null,
+          isActive: null,
+          phone1: null,
+          phone2: null
         }
       });
      
@@ -144,7 +108,7 @@ export default class App extends Component{
 
   delete() {
     if(window.confirm("¿Realmente desea eliminar el registro?")) {
-      this.personaService.delete(this.state.selectedPersona.idPatient).then(data => {   
+      this.personaService.delete(this.state.selectedPersona.idDoctor).then(data => {   
       this.toast.show({severity: 'success', summary: 'Atención!', detail: 'Se eliminó el registro correctamente.'});
         this.personaService.getAll().then(data => this.setState({personas: data}));
       });
@@ -156,23 +120,24 @@ export default class App extends Component{
       <div style={{width:'80%', margin: '0 auto', marginTop: '20px'}}>
         <Menubar model={this.items}/>
         <br/>
-        <Panel header="React CRUD App">
+        <Panel header="React CRUD Doctor">
             <DataTable value={this.state.personas} paginator={true} rows="4" selectionMode="single" selection={this.state.selectedPersona} onSelectionChange={e => this.setState({selectedPersona: e.value})}>
-              <Column field="idPatient" header="ID"></Column>
+              <Column field="idDoctor" header="ID"></Column>
               <Column field="firstName" header="Nombre"></Column>
               <Column field="middleName" header="Nombre2"></Column>
               <Column field="lastName" header="Primer Apellido"></Column>
               <Column field="maidenName" header="Segundo Apellido"></Column>
               <Column field="address1" header="Direccion1"></Column>
               <Column field="address2" header="Direccion2"></Column>
+              <Column field="gender" header="Genero"></Column>
+              <Column field="birthdate" header="Fecha"></Column>
+              <Column field="collegiateNumber" header="numero colegiado"></Column>
+              <Column field="isActive" header="Activo"></Column>
               <Column field="phone1" header="Telefono1"></Column>
               <Column field="phone2" header="Telefono2"></Column>
-              <Column field="gender" header="Genero"></Column>
-              <Column field="birthdate" header="Fecha Nacimiento"></Column>
-   
             </DataTable>
         </Panel>
-        <Dialog header="Crear persona" visible={this.state.visible} style={{width: '400px'}} footer={this.footer} modal={true} onHide={() => this.setState({visible: false})}>
+        <Dialog header="Crear Doctor33" visible={this.state.visible} style={{width: '400px'}} footer={this.footer} modal={true} onHide={() => this.setState({visible: false})}>
             <form id="persona-form">
               <span className="p-float-label">
                 <InputText value={this.state.persona.firstName} style={{width : '100%'}} id="firstName" onChange={(e) => {
@@ -188,7 +153,7 @@ export default class App extends Component{
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.middleName} style={{width : '100%'}} id="maidenName" onChange={(e) => {
+                <InputText value={this.state.persona.middleName} style={{width : '100%'}} id="middleName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
                         let persona = Object.assign({}, prevState.persona);
@@ -197,7 +162,7 @@ export default class App extends Component{
                         return { persona };
                     })}
                   } />
-                <label htmlFor="maidenName">Nombre 2</label>
+                <label htmlFor="middleName">Nombre 1</label>
               </span>
               <br/>
               <span className="p-float-label">
@@ -223,7 +188,7 @@ export default class App extends Component{
                         return { persona };
                     })}
                   } />
-                <label htmlFor="maidenName">Apellido 2</label>
+                <label htmlFor="maidenName">Apellido</label>
               </span>
 
               <br/>
@@ -255,6 +220,63 @@ export default class App extends Component{
 
               <br/>
               <span className="p-float-label">
+                <InputText value={this.state.persona.gender} style={{width : '100%'}} id="gender" onChange={(e) => {
+                    let val = e.target.value;
+                    this.setState(prevState => {
+                        let persona = Object.assign({}, prevState.persona);
+                        persona.gender = val
+
+                        return { persona };
+                    })}
+                  } />
+                <label htmlFor="gender">Genero</label>
+              </span>
+              <br/>
+              <span className="p-float-label">
+                <InputText value={this.state.persona.birthdate} style={{width : '100%'}} id="birthdate" onChange={(e) => {
+                    let val = e.target.value;
+                    this.setState(prevState => {
+                        let persona = Object.assign({}, prevState.persona);
+                        persona.birthdate = val
+
+                        return { persona };
+                    })}
+                  } />
+                <label htmlFor="birthdate">Fecha</label>
+              </span>
+
+              <br/>
+
+              <span className="p-float-label">
+                <InputText value={this.state.persona.collegiateNumber} style={{width : '100%'}} id="collegiateNumber" onChange={(e) => {
+                    let val = e.target.value;
+                    this.setState(prevState => {
+                        let persona = Object.assign({}, prevState.persona);
+                        persona.collegiateNumber = val
+
+                        return { persona };
+                    })}
+                  } />
+                <label htmlFor="collegiateNumber">numero Colegiado</label>
+              </span>
+
+              
+              <br/>
+              <span className="p-float-label">
+                <InputText value={this.state.persona.isActive} style={{width : '100%'}} id="isActive" onChange={(e) => {
+                    let val = e.target.value;
+                    this.setState(prevState => {
+                        let persona = Object.assign({}, prevState.persona);
+                        persona.isActive = val
+
+                        return { persona };
+                    })}
+                  } />
+                <label htmlFor="isActive">Estado</label>
+              </span>
+
+              <br/>
+              <span className="p-float-label">
                 <InputText value={this.state.persona.phone1} style={{width : '100%'}} id="phone1" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
@@ -266,6 +288,7 @@ export default class App extends Component{
                   } />
                 <label htmlFor="phone1">Telefono1</label>
               </span>
+
               <br/>
               <span className="p-float-label">
                 <InputText value={this.state.persona.phone2} style={{width : '100%'}} id="phone2" onChange={(e) => {
@@ -278,38 +301,6 @@ export default class App extends Component{
                     })}
                   } />
                 <label htmlFor="phone2">Telefono2</label>
-              </span>
-
-              <br/>
-
-              <span className="p-float-label">
-
-                
-                <InputText value={this.state.persona.gender} style={{width : '100%'}} id="gender" onChange={(e) => {
-                    let val = e.target.value;
-                    this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.gender = val
-
-                        return { persona };
-                    })}
-                  } />
-                <label htmlFor="gender">Genero</label>
-              </span>
-
-              
-              <br/>
-              <span className="p-float-label">
-                <InputText value={this.state.persona.birthdate} style={{width : '100%'}} id="birthdate" onChange={(e) => {
-                    let val = e.target.value;
-                    this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.birthdate = val
-
-                        return { persona };
-                    })}
-                  } />
-                <label htmlFor="birthdate">Fecha Nacimiento</label>
               </span>
 
 
@@ -325,17 +316,19 @@ export default class App extends Component{
     this.setState({
       visible : true,
       persona : {
-        idPatient: null,
+        idDoctor: null,
         firstName: null,
         middleName: null,
         lastName: null,
         maidenName: null,
         address1: null,
         address2: null,
-        phone1: null,
-        phone2: null,
         gender: null,
-        birthdate: null
+        birthdate: null,
+        collegiateNumber: null,
+        isActive: null,
+        phone1: null,
+        phone2: null
       }
     });
    // document.getElementById('persona-form').reset();
@@ -345,24 +338,20 @@ export default class App extends Component{
     this.setState({
       visible : true,
       persona : {
-        /*
-        id: this.state.selectedPersona.id,
-        nombre: this.state.selectedPersona.nombre,
-        apellido: this.state.selectedPersona.apellido,
-        direccion: this.state.selectedPersona.direccion,
-        telefono : this.state.selectedPersona.telefono*/
-
-        idPatient: this.state.selectedPersona.idPatient,
+        idDoctor: this.state.selectedPersona.idDoctor,
         firstName: this.state.selectedPersona.firstName,
         middleName: this.state.selectedPersona.middleName,
         lastName: this.state.selectedPersona.lastName,
         maidenName: this.state.selectedPersona.maidenName,
         address1: this.state.selectedPersona.address1,
         address2: this.state.selectedPersona.address2,
-        phone1: this.state.selectedPersona.phone1,
-        phone2:this.state.selectedPersona.phone2,
         gender: this.state.selectedPersona.gender,
-        birthdate:this.state.selectedPersona.birthdate
+        birthdate: this.state.selectedPersona.birthdate,
+        collegiateNumber:this.state.selectedPersona.collegiateNumber,
+        isActive: this.state.selectedPersona.isActive,
+        phone1: this.state.selectedPersona.phone1,
+        phone2: this.state.selectedPersona.phone2
+        
       }
     })
   }

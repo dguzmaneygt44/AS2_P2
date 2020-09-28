@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import { PersonaService } from './service/PersonaService';
+//import './App.css';
+import { ConsulService } from '../service/ConsulService';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import {Panel} from 'primereact/panel';
@@ -17,6 +17,9 @@ import { Dropdown } from 'primereact/dropdown';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import moment from 'moment';
+
+
 
 /*
 export default class App extends Component{
@@ -52,12 +55,32 @@ export default class App extends Component{
 }
 */
 
-export default class consultation extends Component{
+export default class ConsultationEntity extends Component{
   constructor(){
     super();
     this.state = {
       visible : false,
       persona: {
+        idConsultation: null,
+        consultationDate:null,
+        diagnosis: null,
+        treatment: null,
+        observations: null,
+        address1: null,
+        address2: null,
+        complaints: null,
+        otherDetails: null,
+        nextVisit: null,
+        idDoctor:null
+        
+        
+
+        
+      },
+      selectedPersona : {
+      },
+      selectedDoctor : {
+
         idPatient: null,
         firstName: null,
         middleName: null,
@@ -68,11 +91,13 @@ export default class consultation extends Component{
         phone1: null,
         phone2: null,
         gender: null,
-        birthdate: null
-      },
-      selectedPersona : {
-
+        birthdate: null,
+        idDoctor: null
+        
+        
       }
+
+
     };
     this.items = [
       {
@@ -92,19 +117,15 @@ export default class consultation extends Component{
       }
     ];
    
-    this.cities = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'}
-  ];
+ 
    
 
    
   
 
-    this.personaService = new PersonaService();
+    this.personaService = new ConsulService();
+    this.selectedDoctor = new ConsulService();  
+    
     this.save = this.save.bind(this);
     this.delete = this.delete.bind(this);
     this.footer = (
@@ -115,25 +136,27 @@ export default class consultation extends Component{
   }
 
   componentDidMount(){
-    this.personaService.getAll().then(data => this.setState({personas: data}))
+    this.personaService.getAll().then(data => this.setState({personas: data})) 
+    
   }
 
+ 
   save() {
     this.personaService.save(this.state.persona).then(data => {
       this.setState({
         visible : false,
         persona: {
-          idPatient: null,
-          firstName: null,
-          middleName: null,
-          lastName: null,
-          maidenName: null,
+          idConsultation: null,
+          consultationDate: null,
+          diagnosis: null,
+          treatment: null,
+          observations: null,
           address1: null,
           address2: null,
-          phone1: null,
-          phone2: null,
-          gender: null,
-          birthdate: null
+          complaints: null,
+          otherDetails: null,
+          nextVisit: null,
+          
         }
       });
      
@@ -153,23 +176,25 @@ export default class consultation extends Component{
 
   render(){
     return (
-      <div style={{width:'80%', margin: '0 auto', marginTop: '20px'}}>
+      <div style={{width:'100%', margin: '0 auto', marginTop: '20px'}}>
         <Menubar model={this.items}/>
         <br/>
         <Panel header="React CRUD Consultas">
             <DataTable value={this.state.personas} paginator={true} rows="4" selectionMode="single" selection={this.state.selectedPersona} onSelectionChange={e => this.setState({selectedPersona: e.value})}>
-              <Column field="idPatient" header="ID"></Column>
-              <Column field="firstName" header="Nombre"></Column>
-              <Column field="middleName" header="Nombre2"></Column>
-              <Column field="lastName" header="Primer Apellido"></Column>
-              <Column field="maidenName" header="Segundo Apellido"></Column>
-              <Column field="address1" header="Direccion1"></Column>
-              <Column field="address2" header="Direccion2"></Column>
-              <Column field="phone1" header="Telefono1"></Column>
-              <Column field="phone2" header="Telefono2"></Column>
-              <Column field="gender" header="Genero"></Column>
-              <Column field="birthdate" header="Fecha Nacimiento"></Column>
-   
+              <Column field="idConsultation" header="ID_consulta"></Column>
+              <Column field="consultationDate" header="Fecha_consulta" className="date" ></Column>
+              <Column field="diagnosis" header="Diagnostico"></Column>
+              <Column field="treatment" header="Tratamiento"></Column>
+              <Column field="observations" header="Observacion"></Column>
+              <Column field="complaints" header="Quejas"></Column>
+              <Column field="otherDetails" header="OtrosDetalles"></Column>
+              <Column field="nextVisit" header="SiguientesVisitas"></Column>
+              <Column field="idDoctor.firstName" header="Telefono122"></Column>
+              <Column field="idDoctor.middleName" header="Telefono122"></Column>
+              <Column field="idDoctor.lastName" header="Telefono122"></Column>
+              <Column field="idDoctor.maidenName" header="Telefono122"></Column>
+              
+    
             </DataTable>
         </Panel>
         <Dialog header="Crear persona" visible={this.state.visible} style={{width: '400px'}} footer={this.footer} modal={true} onHide={() => this.setState({visible: false})}>
@@ -325,17 +350,17 @@ export default class consultation extends Component{
     this.setState({
       visible : true,
       persona : {
-        idPatient: null,
-        firstName: null,
-        middleName: null,
-        lastName: null,
-        maidenName: null,
+        idConsultation: null,
+        consultationDate: null,
+        diagnosis: null,
+        treatment: null,
+        observations: null,
         address1: null,
         address2: null,
-        phone1: null,
-        phone2: null,
-        gender: null,
-        birthdate: null
+        complaints: null,
+        otherDetails: null,
+        nextVisit: null,
+        idDoctor: null
       }
     });
    // document.getElementById('persona-form').reset();
@@ -351,7 +376,7 @@ export default class consultation extends Component{
         apellido: this.state.selectedPersona.apellido,
         direccion: this.state.selectedPersona.direccion,
         telefono : this.state.selectedPersona.telefono*/
-
+/*
         idPatient: this.state.selectedPersona.idPatient,
         firstName: this.state.selectedPersona.firstName,
         middleName: this.state.selectedPersona.middleName,
@@ -363,6 +388,18 @@ export default class consultation extends Component{
         phone2:this.state.selectedPersona.phone2,
         gender: this.state.selectedPersona.gender,
         birthdate:this.state.selectedPersona.birthdate
+        */
+       idConsultation: null,
+        consultationDate: null,
+        diagnosis: null,
+        treatment: null,
+        observations: null,
+        address1: null,
+        address2: null,
+        complaints: null,
+        otherDetails: null,
+        nextVisit: null,
+        idDoctor: null
       }
     })
   }
