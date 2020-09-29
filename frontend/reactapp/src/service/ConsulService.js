@@ -6,13 +6,13 @@ export class ConsulService {
     getAll(){
         return axios.get(this.baseUrl + "consultations").then(res => res.data);
     }
-/*
-    save(persona) {
-        return axios.post(this.baseUrl + "patients", persona).then(res => res.data);
-    }
 
-    delete(idPatient) {
-        return axios.delete(this.baseUrl + "patients/"+ idPatient).then(res => res.data);
+    save(persona) {
+        return axios.post(this.baseUrl + "consultations", persona).then(res => res.data);
+    }
+/*
+    delete(idConsultation) {
+        return axios.delete(this.baseUrl + "consultations/"+   idConsultation).then(res => res.data);
     }
     */
 }
