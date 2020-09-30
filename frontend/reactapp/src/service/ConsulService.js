@@ -10,9 +10,8 @@ export class ConsulService {
     save(persona) {
         return axios.post(this.baseUrl + "consultations", persona).then(res => res.data);
     }
-/*
+
     delete(idConsultation) {
-        return axios.delete(this.baseUrl + "consultations/"+   idConsultation).then(res => res.data);
+        return axios.delete(this.baseUrl + "consultations/"+ idConsultation).then(res => res.data);
     }
-    */
 }

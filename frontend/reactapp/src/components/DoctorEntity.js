@@ -24,7 +24,7 @@ export default class DoctorEntity extends Component{
     super();
     this.state = {
       visible : false,
-      persona: {
+      doctor: {
         idDoctors: null,
         firstName: null,
         middleName: null,
@@ -39,7 +39,7 @@ export default class DoctorEntity extends Component{
         phone1: null,
         phone2: null
       },
-      selectedPersona : {
+      selectedDoctor : {
 
       }
     };
@@ -66,7 +66,7 @@ export default class DoctorEntity extends Component{
    
   
 
-    this.personaService = new DoctorService();
+    this.doctorService = new DoctorService();
     this.save = this.save.bind(this);
     this.delete = this.delete.bind(this);
     this.footer = (
@@ -77,14 +77,14 @@ export default class DoctorEntity extends Component{
   }
 
   componentDidMount(){
-    this.personaService.getAll().then(data => this.setState({personas: data}))
+    this.doctorService.getAll().then(data => this.setState({doctores: data}))
   }
 
   save() {
-    this.personaService.save(this.state.persona).then(data => {
+    this.doctorService.save(this.state.doctor).then(data => {
       this.setState({
         visible : false,
-        persona: {
+        doctor: {
           idDoctor: null,
           firstName: null,
           middleName: null,
@@ -102,15 +102,15 @@ export default class DoctorEntity extends Component{
       });
      
       this.toast.show({severity: 'success', summary: 'Atención!', detail: 'Se guardó el registro correctamente.'});
-      this.personaService.getAll().then(data => this.setState({personas: data}))
+      this.doctorService.getAll().then(data => this.setState({doctores: data}))
     })
   }
 
   delete() {
     if(window.confirm("¿Realmente desea eliminar el registro?")) {
-      this.personaService.delete(this.state.selectedPersona.idDoctor).then(data => {   
+      this.doctorService.delete(this.state.selectedDoctor.idDoctor).then(data => {   
       this.toast.show({severity: 'success', summary: 'Atención!', detail: 'Se eliminó el registro correctamente.'});
-        this.personaService.getAll().then(data => this.setState({personas: data}));
+        this.doctorService.getAll().then(data => this.setState({doctores: data}));
       });
     }
   }
@@ -121,7 +121,7 @@ export default class DoctorEntity extends Component{
         <Menubar model={this.items}/>
         <br/>
         <Panel header="React CRUD Doctor">
-            <DataTable value={this.state.personas} paginator={true} rows="4" selectionMode="single" selection={this.state.selectedPersona} onSelectionChange={e => this.setState({selectedPersona: e.value})}>
+            <DataTable value={this.state.doctores} paginator={true} rows="4" selectionMode="single" selection={this.state.selectedDoctor} onSelectionChange={e => this.setState({selectedDoctor: e.value})}>
               <Column field="idDoctor" header="ID"></Column>
               <Column field="firstName" header="Nombre"></Column>
               <Column field="middleName" header="Nombre2"></Column>
@@ -137,55 +137,55 @@ export default class DoctorEntity extends Component{
               <Column field="phone2" header="Telefono2"></Column>
             </DataTable>
         </Panel>
-        <Dialog header="Crear Doctor33" visible={this.state.visible} style={{width: '400px'}} footer={this.footer} modal={true} onHide={() => this.setState({visible: false})}>
+        <Dialog header="Crear Doctor33" visible={this.state.visible} style={{width: '500px'}} footer={this.footer} modal={true} onHide={() => this.setState({visible: false})}>
             <form id="persona-form">
               <span className="p-float-label">
-                <InputText value={this.state.persona.firstName} style={{width : '100%'}} id="firstName" onChange={(e) => {
+                <InputText value={this.state.doctor.firstName} style={{width : '100%'}} id="firstName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.firstName = val;
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.firstName = val;
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="firstName">Nombre 1</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.middleName} style={{width : '100%'}} id="middleName" onChange={(e) => {
+                <InputText value={this.state.doctor.middleName} style={{width : '100%'}} id="middleName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.middleName = val;
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.middleName = val;
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="middleName">Nombre 1</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.lastName} style={{width : '100%'}} id="lastName" onChange={(e) => {
+                <InputText value={this.state.doctor.itemslastName} style={{width : '100%'}} id="lastName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.lastName = val
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.lastName = val
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="lastName">Apellido</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.maidenName} style={{width : '100%'}} id="maidenName" onChange={(e) => {
+                <InputText value={this.state.doctor.maidenName} style={{width : '100%'}} id="maidenName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.maidenName = val
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.maidenName = val
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="maidenName">Apellido</label>
@@ -193,26 +193,26 @@ export default class DoctorEntity extends Component{
 
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.address1} style={{width : '100%'}} id="address1" onChange={(e) => {
+                <InputText value={this.state.doctor.address1} style={{width : '100%'}} id="address1" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.address1 = val
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.address1 = val
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="address1">Direccion1</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.address2} style={{width : '100%'}} id="address2" onChange={(e) => {
+                <InputText value={this.state.doctor.address2} style={{width : '100%'}} id="address2" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.address2 = val
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.address2 = val
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="address2">Direccion2</label>
@@ -220,26 +220,26 @@ export default class DoctorEntity extends Component{
 
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.gender} style={{width : '100%'}} id="gender" onChange={(e) => {
+                <InputText value={this.state.doctor.gender} style={{width : '100%'}} id="gender" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.gender = val
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.gender = val
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="gender">Genero</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.birthdate} style={{width : '100%'}} id="birthdate" onChange={(e) => {
+                <InputText value={this.state.doctor.birthdate} style={{width : '100%'}} id="birthdate" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.birthdate = val
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.birthdate = val
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="birthdate">Fecha</label>
@@ -248,13 +248,13 @@ export default class DoctorEntity extends Component{
               <br/>
 
               <span className="p-float-label">
-                <InputText value={this.state.persona.collegiateNumber} style={{width : '100%'}} id="collegiateNumber" onChange={(e) => {
+                <InputText value={this.state.doctor.collegiateNumber} style={{width : '100%'}} id="collegiateNumber" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.collegiateNumber = val
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.collegiateNumber = val
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="collegiateNumber">numero Colegiado</label>
@@ -263,13 +263,13 @@ export default class DoctorEntity extends Component{
               
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.isActive} style={{width : '100%'}} id="isActive" onChange={(e) => {
+                <InputText value={this.state.doctor.isActive} style={{width : '100%'}} id="isActive" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.isActive = val
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.isActive = val
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="isActive">Estado</label>
@@ -277,13 +277,13 @@ export default class DoctorEntity extends Component{
 
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.phone1} style={{width : '100%'}} id="phone1" onChange={(e) => {
+                <InputText value={this.state.doctor.phone1} style={{width : '100%'}} id="phone1" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.phone1 = val
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.phone1 = val
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="phone1">Telefono1</label>
@@ -291,13 +291,13 @@ export default class DoctorEntity extends Component{
 
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.phone2} style={{width : '100%'}} id="phone2" onChange={(e) => {
+                <InputText value={this.state.doctor.phone2} style={{width : '100%'}} id="phone2" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.phone2 = val
+                        let doctor = Object.assign({}, prevState.doctor);
+                        doctor.phone2 = val
 
-                        return { persona };
+                        return { doctor };
                     })}
                   } />
                 <label htmlFor="phone2">Telefono2</label>
@@ -315,7 +315,7 @@ export default class DoctorEntity extends Component{
   showSaveDialog(){
     this.setState({
       visible : true,
-      persona : {
+      doctor : {
         idDoctor: null,
         firstName: null,
         middleName: null,
@@ -337,20 +337,20 @@ export default class DoctorEntity extends Component{
   showEditDialog() {
     this.setState({
       visible : true,
-      persona : {
-        idDoctor: this.state.selectedPersona.idDoctor,
-        firstName: this.state.selectedPersona.firstName,
-        middleName: this.state.selectedPersona.middleName,
-        lastName: this.state.selectedPersona.lastName,
-        maidenName: this.state.selectedPersona.maidenName,
-        address1: this.state.selectedPersona.address1,
-        address2: this.state.selectedPersona.address2,
-        gender: this.state.selectedPersona.gender,
-        birthdate: this.state.selectedPersona.birthdate,
-        collegiateNumber:this.state.selectedPersona.collegiateNumber,
-        isActive: this.state.selectedPersona.isActive,
-        phone1: this.state.selectedPersona.phone1,
-        phone2: this.state.selectedPersona.phone2
+      doctor : {
+        idDoctor: this.state.selectedDoctor.idDoctor,
+        firstName: this.state.selectedDoctor.firstName,
+        middleName: this.state.selectedDoctor.middleName,
+        lastName: this.state.selectedDoctor.lastName,
+        maidenName: this.state.selectedDoctor.maidenName,
+        address1: this.state.selectedDoctor.address1,
+        address2: this.state.selectedDoctor.address2,
+        gender: this.state.selectedDoctor.gender,
+        birthdate: this.state.selectedDoctor.birthdate,
+        collegiateNumber:this.state.selectedDoctor.collegiateNumber,
+        isActive: this.state.selectedDoctor.isActive,
+        phone1: this.state.selectedDoctor.phone1,
+        phone2: this.state.selectedDoctor.phone2
         
       }
     })

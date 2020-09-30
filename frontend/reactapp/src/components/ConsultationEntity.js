@@ -29,19 +29,18 @@ export default class ConsultationEntity extends Component{
     super();
     this.state = {
       visible : false,
-      persona: {
+      consulta: {
 
         idConsultation: null,
         consultationDate: null,
         diagnosis: null,
         treatment: null,
         observations: null,
-        address1: null,
-        address2: null,
         complaints: null,
         otherDetails: null,
         nextVisit: null,
         //////////////////////
+        docidDoctor:null,
         docfirstName : null,
         docmiddleName: null,
         doclastName: null,
@@ -68,53 +67,8 @@ export default class ConsultationEntity extends Component{
         ///////////////////////////
 
         
-      },
-      selectedPersona : {
-      },
-      selectedDoctor : {
-
-        idPatient: null,
-        firstName: null,
-        middleName: null,
-        lastName: null,
-        maidenName: null,
-        address1: null,
-        address2: null,
-        phone1: null,
-        phone2: null,
-        gender: null,
-        birthdate: null,
-         //////////////////////
-         docfirstName : null,
-         docmiddleName: null,
-         doclastName: null,
-         docmaidenName: null,
-         docaddress1: null,
-         docaddress2: null,
-         docgender:null,
-         docbirthdate:null,
-         doccollegiateNumber: null,
-         docisActive:null,
-         docphone1:null,
-         docphone2: null,
-        //////////////////////
-       pasfirstName:null,
-       pasmiddleName:null,
-       paslastName:null,
-       pasmaidenName:null,
-       pasaddress1:null,
-       pasaddress2:null,
-       pasphone1:null,
-       pasphone2:null,
-       pasgender:null,
-       pasbirthdate:null
-         ///////////////////////////
-       
-      
-        
-        
       }
-
+      
     };
     this.items = [
       {
@@ -134,8 +88,8 @@ export default class ConsultationEntity extends Component{
       }
     ];
    
-    this.personaService = new ConsulService();
-    this.selectedDoctor = new ConsulService();  
+    this.consultaService = new ConsulService();
+    this.consultaDoctor = new ConsulService();  
     
     this.save = this.save.bind(this);
     this.delete = this.delete.bind(this);
@@ -147,16 +101,17 @@ export default class ConsultationEntity extends Component{
   }
 
   componentDidMount(){
-    this.personaService.getAll().then(data => this.setState({personas: data})) 
+    this.consultaService.getAll().then(data => this.setState({consultas: data})) 
     
   }
 
  
   save() {
-    this.personaService.save(this.state.persona).then(data => {
+    this.consultaService.save(this.state.consulta ).then(data => {
       this.setState({
         visible : false,
-        persona: {
+        consulta: {
+          
           idConsultation: null,
           consultationDate: null,
           diagnosis: null,
@@ -165,7 +120,9 @@ export default class ConsultationEntity extends Component{
           complaints: null,
           otherDetails: null,
           nextVisit: null,
-           //////////////////////
+//////////////////////////////////////////
+idDoctor:{ 
+        docidDoctor:null,
         docfirstName : null,
         docmiddleName: null,
         doclastName: null,
@@ -177,7 +134,8 @@ export default class ConsultationEntity extends Component{
         doccollegiateNumber: null,
         docisActive:null,
         docphone1:null,
-        docphone2: null,
+        docphone2: null
+      },
        //////////////////////
       pasfirstName:null,
       pasmiddleName:null,
@@ -195,15 +153,15 @@ export default class ConsultationEntity extends Component{
       });
      
       this.toast.show({severity: 'success', summary: 'Atención!', detail: 'Se guardó el registro correctamente.'});
-      this.personaService.getAll().then(data => this.setState({personas: data}))
+      this.consultaService.getAll().then(data => this.setState({consultas: data}))
     })
   }
 
   delete() {
     if(window.confirm("¿Realmente desea eliminar el registro?")) {
-      this.personaService.delete(this.state.selectedPersona.idPatient).then(data => {   
+      this.consultaService.delete(this.state.selectedConsulta.idConsultation).then(data => {   
       this.toast.show({severity: 'success', summary: 'Atención!', detail: 'Se eliminó el registro correctamente.'});
-        this.personaService.getAll().then(data => this.setState({personas: data}));
+        this.consultaService.getAll().then(data => this.setState({consultas: data}));
       });
     }
   }
@@ -214,7 +172,7 @@ export default class ConsultationEntity extends Component{
         <Menubar model={this.items}/>
         <br/>
         <Panel header="React CRUD Consultas">
-            <DataTable value={this.state.personas} paginator={true} rows="4" selectionMode="single" selection={this.state.selectedPersona} onSelectionChange={e => this.setState({selectedPersona: e.value})}>
+            <DataTable value={this.state.consultas} paginator={true} rows="4" selectionMode="single" selection={this.state.selectedConsulta} onSelectionChange={e => this.setState({selectedConsulta: e.value})}>
               <Column field="idConsultation" header="ID_consulta"></Column>
               <Column field="consultationDate" header="Fecha"></Column>
               <Column field="diagnosis" header="Diagnostico"></Column>
@@ -257,52 +215,65 @@ export default class ConsultationEntity extends Component{
 
               <div>
               <span className="p-float-label">
-                <InputText value={this.state.persona.consultationDate} style={{width : '100%'}} id="consultationDate" onChange={(e) => {
+                <InputText value={this.state.consulta.idConsultation} style={{width : '100%'}} id="idConsultation" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.consultationDate = val;
+                        let consulta = Object.assign({}, prevState.consulta.consulta);
+                        consulta.idConsultation = val;
 
-                        return { persona };
+                        return { consulta };
+                    })}
+                  } />
+                <label htmlFor="idConsultation">id</label>
+              </span>
+              <br/>
+              <span className="p-float-label">
+                <InputText value={this.state.consulta.consultationDate} style={{width : '100%'}} id="consultationDate" onChange={(e) => {
+                    let val = e.target.value;
+                    this.setState(prevState => {
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.consultationDate = val;
+
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="consultationDate">Fecha consulta</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.diagnosise} style={{width : '100%'}} id="diagnosis" onChange={(e) => {
+                <InputText value={this.state.consulta.diagnosis} style={{width : '100%'}} id="diagnosis" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.diagnosis = val;
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.diagnosis = val;
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="diagnosis">Diagnostico</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.treatment} style={{width : '100%'}} id="treatment" onChange={(e) => {
+                <InputText value={this.state.consulta.treatment} style={{width : '100%'}} id="treatment" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.treatment = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.treatment = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="treatment">Tratamiento</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.observations} style={{width : '100%'}} id="observations" onChange={(e) => {
+                <InputText value={this.state.consulta.observations} style={{width : '100%'}} id="observations" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.observations = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.observations = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="observations">Observaciones</label>
@@ -310,26 +281,26 @@ export default class ConsultationEntity extends Component{
 
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.complaints} style={{width : '100%'}} id="complaints" onChange={(e) => {
+                <InputText value={this.state.consulta.complaints} style={{width : '100%'}} id="complaints" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.complaints = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.complaints = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="complaints">Quejas</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.otherDetails} style={{width : '100%'}} id="otherDetails" onChange={(e) => {
+                <InputText value={this.state.consulta.otherDetails} style={{width : '100%'}} id="otherDetails" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.otherDetails = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.otherDetails = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="otherDetails">otros detalles</label>
@@ -337,13 +308,13 @@ export default class ConsultationEntity extends Component{
 
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.nextVisit} style={{width : '100%'}} id="nextVisit" onChange={(e) => {
+                <InputText value={this.state.consulta.nextVisit} style={{width : '100%'}} id="nextVisit" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.nextVisit = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.nextVisit = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="nextVisit">Siguiente Visita</label>
@@ -355,161 +326,161 @@ export default class ConsultationEntity extends Component{
               
               <div>
               <span className="p-float-label">
-                <InputText value={this.state.persona.docfirstName} style={{width : '100%'}} id="docfirstName" onChange={(e) => {
+                <InputText value={this.state.consulta.docfirstName} style={{width : '100%'}} id="docfirstName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.docfirstName = val;
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.docfirstName = val;
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
-                <label htmlFor="docfirstName">nombre docto</label>
+                <label htmlFor="docfirstName">.idDoctornombre docto</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.diagnosise} style={{width : '100%'}} id="docmiddleName" onChange={(e) => {
+                <InputText value={this.state.consulta.diagnosise} style={{width : '100%'}} id="docmiddleName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.docmiddleName = val;
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.docmiddleName = val;
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="docmiddleName">Diagnostico</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.doclastName} style={{width : '100%'}} id="doclastName" onChange={(e) => {
+                <InputText value={this.state.consulta.doclastName} style={{width : '100%'}} id="doclastName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.doclastName = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.doclastName = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
-                <label htmlFor="tdoclastName">TdoclastNameo</label>
+                <label htmlFor="tdoclastName">idDoctor.TdoclastNameo</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.docmaidenName} style={{width : '100%'}} id="docmaidenName" onChange={(e) => {
+                <InputText value={this.state.consulta.docmaidenName} style={{width : '100%'}} id="docmaidenName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.docmaidenName = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                          consulta.docmaidenName = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
-                <label htmlFor="docmaidenName">docmaidenName:</label>
-              </span>
-
-              <br/>
-              <span className="p-float-label">
-                <InputText value={this.state.persona.docaddress1} style={{width : '100%'}} id="docaddress1" onChange={(e) => {
-                    let val = e.target.value;
-                    this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.docaddress1 = val
-
-                        return { persona };
-                    })}
-                  } />
-                <label htmlFor="docaddress1">Quejas</label>
-              </span>
-              <br/>
-              <span className="p-float-label">
-                <InputText value={this.state.persona.docaddress2} style={{width : '100%'}} id="docaddress2" onChange={(e) => {
-                    let val = e.target.value;
-                    this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.docaddress2 = val
-
-                        return { persona };
-                    })}
-                  } />
-                <label htmlFor="docaddress2">docaddress2</label>
+                <label htmlFor="docmaidenName">idDoctor.docmaidenName:</label>
               </span>
 
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.docgender} style={{width : '100%'}} id="docgender" onChange={(e) => {
+                <InputText value={this.state.consulta.docaddress1} style={{width : '100%'}} id="docaddress1" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.docgender = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.docaddress1 = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
-                <label htmlFor="docgender">Siguiente Visita</label>
+                <label htmlFor="docaddress1">idDoctor.Quejas</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.docbirthdate} style={{width : '100%'}} id="docbirthdate" onChange={(e) => {
+                <InputText value={this.state.consulta.docaddress2} style={{width : '100%'}} id="docaddress2" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.docbirthdate = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.docaddress2 = val
 
-                        return { persona };
+                        return { consulta };
+                    })}
+                  } />
+                <label htmlFor="docaddress2">idDoctor.docaddress2</label>
+              </span>
+
+              <br/>
+              <span className="p-float-label">
+                <InputText value={this.state.consulta.docgender} style={{width : '100%'}} id="docgender" onChange={(e) => {
+                    let val = e.target.value;
+                    this.setState(prevState => {
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.docgender = val
+
+                        return { consulta };
+                    })}
+                  } />
+                <label htmlFor="docgender">idDoctor.Siguiente Visita</label>
+              </span>
+              <br/>
+              <span className="p-float-label">
+                <InputText value={this.state.consulta.docbirthdate} style={{width : '100%'}} id="docbirthdate" onChange={(e) => {
+                    let val = e.target.value;
+                    this.setState(prevState => {
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.docbirthdate = val
+
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="docbirthdate">docbirthdate</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.doccollegiateNumber} style={{width : '100%'}} id="doccollegiateNumber" onChange={(e) => {
+                <InputText value={this.state.consulta.doccollegiateNumber} style={{width : '100%'}} id="doccollegiateNumber" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.doccollegiateNumber = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.doccollegiateNumber = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
-                <label htmlFor="doccollegiateNumberr">doccollegiateNumber</label>
+                <label htmlFor="doccollegiateNumberr">idDoctor.doccollegiateNumber</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.docisActive} style={{width : '100%'}} id="docisActive" onChange={(e) => {
+                <InputText value={this.state.consulta.docisActive} style={{width : '100%'}} id="docisActive" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.docisActive = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.docisActive = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
-                <label htmlFor="docisActive">docisActive</label>
+                <label htmlFor="docisActive">idDoctor.docisActive</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.docphone1} style={{width : '100%'}} id="docphone1" onChange={(e) => {
+                <InputText value={this.state.consulta.docphone1} style={{width : '100%'}} id="docphone1" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.docphone1 = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.docphone1 = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
-                <label htmlFor="docphone1">docphone1</label>
+                <label htmlFor="docphone1">idDoctor.docphone1</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.docphone2} style={{width : '100%'}} id="docphone2" onChange={(e) => {
+                <InputText value={this.state.consulta.docphone2} style={{width : '100%'}} id="docphone2" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.docphone2 = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.docphone2 = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
-                <label htmlFor="docphone">telefono 2</label>
+                <label htmlFor="docphone">idDoctor.telefono 2</label>
               </span>
 
               </div>
@@ -518,52 +489,52 @@ export default class ConsultationEntity extends Component{
               <hr/>
               <div>
               <span className="p-float-label">
-                <InputText value={this.state.persona.pasfirstName} style={{width : '100%'}} id="pasfirstName" onChange={(e) => {
+                <InputText value={this.state.consulta.pasfirstName} style={{width : '100%'}} id="pasfirstName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.pasfirstName = val;
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.pasfirstName = val;
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="pasfirstName">pasfirstName</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.pasmiddleName} style={{width : '100%'}} id="pasmiddleName" onChange={(e) => {
+                <InputText value={this.state.consulta.pasmiddleName} style={{width : '100%'}} id="pasmiddleName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.pasmiddleName = val;
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.pasmiddleName = val;
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="pasmiddleName">pasmiddleName</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.paslastName} style={{width : '100%'}} id="paslastName" onChange={(e) => {
+                <InputText value={this.state.consulta.paslastName} style={{width : '100%'}} id="paslastName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.paslastNamee = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.paslastNamee = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="paslastName">paslastName</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.pasmaidenName} style={{width : '100%'}} id="pasmaidenName" onChange={(e) => {
+                <InputText value={this.state.consulta.pasmaidenName} style={{width : '100%'}} id="pasmaidenName" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.pasmaidenName = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.pasmaidenName = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="pasmaidenName">dpasmaidenName:</label>
@@ -571,26 +542,26 @@ export default class ConsultationEntity extends Component{
 
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.pasaddress1} style={{width : '100%'}} id="pasaddress1" onChange={(e) => {
+                <InputText value={this.state.consulta.pasaddress1} style={{width : '100%'}} id="pasaddress1" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.pasaddress1 = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.pasaddress1 = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="pasaddress11">pasaddress1</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.pasaddress2} style={{width : '100%'}} id="pasaddress2" onChange={(e) => {
+                <InputText value={this.state.consulta.pasaddress2} style={{width : '100%'}} id="pasaddress2" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.pasaddress2 = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.pasaddress2 = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="pasaddress2">pasaddress22</label>
@@ -598,52 +569,52 @@ export default class ConsultationEntity extends Component{
 
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.pasphone1} style={{width : '100%'}} id="pasphone1" onChange={(e) => {
+                <InputText value={this.state.consulta.pasphone1} style={{width : '100%'}} id="pasphone1" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.pasphone1 = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.pasphone1 = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="pasphone1">pasphone1</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.pasphone2} style={{width : '100%'}} id="pasphone2" onChange={(e) => {
+                <InputText value={this.state.consulta.pasphone2} style={{width : '100%'}} id="pasphone2" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.pasphone2 = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.pasphone2 = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="pasphone2">pasphone2</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.pasgender} style={{width : '100%'}} id="pasgender" onChange={(e) => {
+                <InputText value={this.state.consulta.pasgender} style={{width : '100%'}} id="pasgender" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.pasgender = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.pasgender = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="pasgender">pasgender</label>
               </span>
               <br/>
               <span className="p-float-label">
-                <InputText value={this.state.persona.pasbirthdate} style={{width : '100%'}} id="pasbirthdate" onChange={(e) => {
+                <InputText value={this.state.consulta.pasbirthdate} style={{width : '100%'}} id="pasbirthdate" onChange={(e) => {
                     let val = e.target.value;
                     this.setState(prevState => {
-                        let persona = Object.assign({}, prevState.persona);
-                        persona.pasbirthdate = val
+                        let consulta = Object.assign({}, prevState.consulta);
+                        consulta.pasbirthdate = val
 
-                        return { persona };
+                        return { consulta };
                     })}
                   } />
                 <label htmlFor="pasbirthdate">pasbirthdate</label>
@@ -669,19 +640,18 @@ export default class ConsultationEntity extends Component{
   showSaveDialog(){
     this.setState({
       visible : true,
-      persona : {
+      consulta : {
+        
         idConsultation: null,
         consultationDate: null,
         diagnosis: null,
         treatment: null,
         observations: null,
-        address1: null,
-        address2: null,
         complaints: null,
         otherDetails: null,
         nextVisit: null,
         
-         //////////////////////
+         docidDoctor:null,
          docfirstName : null,
          docmiddleName: null,
          doclastName: null,
@@ -694,7 +664,7 @@ export default class ConsultationEntity extends Component{
          docisActive:null,
          docphone1:null,
          docphone2: null,
-        //////////////////////
+      
        pasfirstName:null,
        pasmiddleName:null,
        paslastName:null,
@@ -714,7 +684,7 @@ export default class ConsultationEntity extends Component{
   showEditDialog() {
     this.setState({
       visible : true,
-      persona : {
+      consulta : {
         /*
         id: this.state.selectedPersona.id,
         nombre: this.state.selectedPersona.nombre,
@@ -734,32 +704,30 @@ export default class ConsultationEntity extends Component{
         gender: this.state.selectedPersona.gender,
         birthdate:this.state.selectedPersona.birthdate
         */
-        idConsultation: this.state.selectedPersona.idConsultation,
-        consultationDate: this.state.selectedPersona.consultationDate,
-        diagnosis: this.state.selectedPersona.diagnosis,
-        treatment: this.state.selectedPersona.treatment,
-        observations: this.state.selectedPersona.observations,
-        address1: this.state.selectedPersona.address1,
-        address2: this.state.selectedPersona.address2,
-        complaints: this.state.selectedPersona.complaints,
-        otherDetails: this.state.selectedPersona.otherDetails,
-        nextVisit: this.state.selectedPersona.nextVisit,
-        idDoctor: this.state.selectedPersona.idDoctor,
+        idConsultation: this.state.selectedConsulta.idConsultation,
+        consultationDate: this.state.selectedConsulta.consultationDate,
+        diagnosis: this.state.selectedConsulta.diagnosis,
+        treatment: this.state.selectedConsulta.treatment,
+        observations: this.state.selectedConsulta.observations,
+        complaints: this.state.selectedConsulta.complaints,
+        otherDetails: this.state.selectedConsulta.otherDetails,
+        nextVisit: this.state.selectedConsulta.nextVisit,
+        
 
          ////////////////////////
-         
-         //docfirstName : this.state.selectedPersona.docfirstName,
-         //docmiddleName: this.state.selectedPersona.docmiddleNam,
-        // doclastName: this.state.selectedPersona. doclastName,
-        // docmaidenName: this.state.selectedPersona.docmaidenName,
-        // docaddress1: this.state.selectedPersona.docaddress1,
-         //docaddress2: this.state.selectedPersona.docaddress2,
-         //docgender: this.state.selectedPersona.docgende,
-         //docbirthdate: this.state.selectedPersona.docbirthdate,
-         //doccollegiateNumber: this.state.selectedPersona.doccollegiateNumber,
-         //docisActive: this.state.selectedPersona.docisActive,
-         //docphone1: this.state.selectedPersona.docphone1,
-         //docphone2: this.state.selectedPersona.docphone2,
+         docidDoctor: this.state.selectedConsulta.docidDoctor,
+         docfirstName : this.state.selectedConsulta.docfirstName,
+         docmiddleName: this.state.selectedConsulta.docmiddleNam,
+         doclastName: this.state.selectedConsulta.doclastName,
+         docmaidenName: this.state.selectedConsulta.docmaidenName,
+         docaddress1: this.state.selectedConsulta.docaddress1,
+         docaddress2: this.state.selectedConsulta.docaddress2,
+         docgender: this.state.selectedConsulta.docgende,
+         docbirthdate: this.state.selectedConsulta.docbirthdate,
+         doccollegiateNumber: this.state.selectedConsulta.doccollegiateNumber,
+         docisActive: this.state.selectedConsulta.docisActive,
+         docphone1: this.state.selectedConsulta.docphone1,
+         docphone2: this.state.selectedConsulta.docphone2,
         //////////////////////
        //pasfirstName: this.state.selectedPersona.pasfirstName,
        ///pasmiddleName: this.state.selectedPersona.pasmiddleName,
