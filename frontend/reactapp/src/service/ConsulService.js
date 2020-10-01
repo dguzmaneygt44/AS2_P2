@@ -7,8 +7,9 @@ export class ConsulService {
         return axios.get(this.baseUrl + "consultations").then(res => res.data);
     }
 
-    save(persona) {
-        return axios.post(this.baseUrl + "consultations", persona).then(res => res.data);
+   
+    save(consulta) {
+        return axios.post(this.baseUrl + "consultations", consulta).then(res => res.data);
     }
 
     delete(idConsultation) {
