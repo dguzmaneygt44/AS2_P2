@@ -13,7 +13,7 @@ function App(){
     
     <Router>
         <div>
-            <h1>Laboratorio 2</h1>
+            <h1>Examen Parcial 2</h1>
         </div>
         <a path={'/App'} href={'/App'} component={Persona} className="btn btn-primary">Persona</a>
         <a path={'/App'} href={'/DoctorEntity'} component={Doctor} className="btn btn-outline-secondary">Doctor</a>

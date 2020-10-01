@@ -12,7 +12,7 @@ import {Button} from 'primereact/button';
 import { Toast } from 'primereact/toast';
 
 import { Dropdown } from 'primereact/dropdown';
-
+import { Calendar } from 'primereact/calendar';
 
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -123,8 +123,10 @@ export default class App extends Component{
               <Column field="phone1" header="Telefono1"></Column>
               <Column field="phone2" header="Telefono2"></Column>
               <Column field="gender" header="Genero"></Column>
-              <Column field="birthdate" header="Fecha Nacimiento"></Column>
-   
+              <Column dateFormat="dd/mm/yy" field="birthdate" header="Fecha Nacimiento" style={{width:'20%', margin: '0 auto', marginTop: '20px'}}></Column>
+
+
+ 
             </DataTable>
         </Panel>
         <Dialog header="Crear persona" visible={this.state.visible} style={{width: '400px'}} footer={this.footer} modal={true} onHide={() => this.setState({visible: false})}>

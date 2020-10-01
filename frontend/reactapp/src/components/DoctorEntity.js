@@ -117,7 +117,7 @@ export default class DoctorEntity extends Component{
 
   render(){
     return (
-      <div style={{width:'80%', margin: '0 auto', marginTop: '20px'}}>
+      <div style={{width:'100%', margin: '0 auto', marginTop: '20px'}}>
         <Menubar model={this.items}/>
         <br/>
         <Panel header="React CRUD Doctor">
@@ -128,9 +128,9 @@ export default class DoctorEntity extends Component{
               <Column field="lastName" header="Primer Apellido"></Column>
               <Column field="maidenName" header="Segundo Apellido"></Column>
               <Column field="address1" header="Direccion1"></Column>
-              <Column field="address2" header="Direccion2"></Column>
-              <Column field="gender" header="Genero"></Column>
-              <Column field="birthdate" header="Fecha"></Column>
+              <Column field="address2" header="Direccion2" style={{width:'10%'}}></Column>
+              <Column field="gender" header="Genero" style={{width:'5%', margin: '0 auto', marginTop: '0 auto'}}></Column>
+              <Column field="birthdate" header="Fecha" style={{width:'20%', margin: '0 auto', marginTop: '0 auto'}}></Column>
               <Column field="collegiateNumber" header="numero colegiado"></Column>
               <Column field="isActive" header="Activo"></Column>
               <Column field="phone1" header="Telefono1"></Column>

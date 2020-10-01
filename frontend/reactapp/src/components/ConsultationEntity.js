@@ -90,7 +90,7 @@ export default class ConsultationEntity extends Component{
         consulta: {
           
           idConsultation: null,
-          consultationDate: null,
+         consultationDate: null,
           diagnosis: null,
           treatment: null,
           observations: null,
@@ -119,6 +119,10 @@ export default class ConsultationEntity extends Component{
     }
   }
 
+  
+
+
+  
   render(){
     return (
       <div style={{width:'300%', margin: '0 auto', marginTop: '0 auto'}}>
@@ -126,14 +130,15 @@ export default class ConsultationEntity extends Component{
         <br/>
         <Panel header="React CRUD Consultas">
             <DataTable value={this.state.consultas} paginator={true} rows="4" selectionMode="single" selection={this.state.selectedConsulta} onSelectionChange={e => this.setState({selectedConsulta: e.value})}>
-              <Column field="idConsultation" header="ID_consulta"></Column>
-              <Column field="consultationDate" header="Fecha"></Column>
+              <Column field="idConsultation" header="ID_consulta" ></Column>
+              <Column field="consultationDate" header="Fecha de consulta" style={{width:'6%'}} ></Column>
               <Column field="diagnosis" header="Diagnostico"></Column>
               <Column field="treatment" header="Tratamiento"></Column>
               <Column field="observations" header="Observacion"></Column>
               <Column field="complaints" header="Quejas"></Column>
-              <Column field="otherDetails" header="OtrosDetalles"></Column>
-              <Column field="nextVisit" header="SiguientesVisitas"></Column>
+              <Column field="otherDetails" header="Otros Detalles"></Column>
+              <Column field="nextVisit" header="Siguientes Visitas"  style={{width:'6%'}}></Column>
+              
               
               <Column field="idDoctor.firstName" header="Nombre Doctor"></Column>
               <Column field="idDoctor.middleName" header="Segundo Nombre Doctor"></Column>
@@ -142,7 +147,7 @@ export default class ConsultationEntity extends Component{
               <Column field="idDoctor.address1" header="Direccion"></Column>
               <Column field="idDoctor.address2" header="Segundo Direccion"></Column>
               <Column field="idDoctor.gender" header="Genero"></Column>
-              <Column field="idDoctor.birthdate" header="Fecha"></Column>
+              <Column field="idDoctor.birthdate" header="Fecha Nacimiento"  style={{width:'6%'}}></Column>
               <Column field="idDoctor.collegiateNumber" header="Colegiado"></Column>
               <Column field="idDoctor.isActive" header="Estado"></Column>
               <Column field="idDoctor.phone1" header="Telefono"></Column>
@@ -157,7 +162,10 @@ export default class ConsultationEntity extends Component{
               <Column field="idPatient.phone1" header="Telefono paciente"></Column>
               <Column field="idPatient.phone2" header="Telefono2 paciente"></Column>
               <Column field="idPatient.gender" header="Genero"></Column>
-              <Column field="idPatient.birthdate" header="Fecha Nacimiento"></Column>
+              <Column field="idPatient.birthdate" header="Fecha Nacimiento"  style={{width:'6%'}}></Column>
+            
+           
+              
               
               
     
@@ -285,6 +293,8 @@ export default class ConsultationEntity extends Component{
                   } />
                 <label htmlFor="idPatient">id paciente</label>
               </span>
+              
+              
             
               </div>
               <br/>
